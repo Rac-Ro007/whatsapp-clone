@@ -49,28 +49,48 @@ const Chat = () => {
         });
     }
   }, [roomId]);
+
+  const updateRecieveMessages = () => {
+      // db.collection("rooms")
+      //   .doc(roomId)
+      //   .collection("messages").where('name', '!=', onlineUsers.myName)
+      //   .update({
+      //     status: 'seen'
+      //   });
+      var unReadMessages = db.collection("rooms").doc(roomId).collection("messages")
+
+      unReadMessages.where('name', '!=', onlineUsers.myName)
+        .get()
+        .then(snapshots => {
+          if (snapshots.size > 0) {
+            snapshots.forEach(msg => {
+              unReadMessages.doc(msg.id).update({ status: 'seen' })
+            })
+          }
+        })
+  }
   
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
+    updateRecieveMessages()
   }, [roomId]);
-
-  const getSentStatus = () => {
-
-  }
 
   const sendMessage = e => {
     e.preventDefault();
     if (input) {
+      
       // fetching status of user
       var receipentStatus = '';
-      // console.log(onlineUsers)
+
+      console.log(onlineUsers)
+      console.log(user)
       onlineUsers.onUpdated(function(count, users) {
-        for(var i in users) {
+        for(var userRole in users) {
             console.log({roomMembers})
-            console.log(users[i])
-            for (var j in roomMembers) {
-              if (roomMembers[j] === users[i] && users[i] !== onlineUsers.myName) {
-                console.log(roomMembers[j] === users[i])
+            console.log(users[userRole])
+            for (var member in roomMembers) {
+              if (roomMembers[member] === users[userRole] && users[userRole] !== onlineUsers.myName) {
+                console.log(roomMembers[member] === users[userRole])
                 receipentStatus = 'delivered'
                 break
               }
@@ -86,7 +106,7 @@ const Chat = () => {
         .collection("messages")
         .add({
           message: input,
-          name: user.displayName,
+          name: user.email,
           // to add the timestamp of the server time
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
           // status of message
@@ -141,7 +161,7 @@ const Chat = () => {
           return (
             <p
               className={`chat__message ${
-                message.name === user.displayName && "chat__receiver"
+                message.name === user.email && "chat__receiver"
                 //to check if the messaging user is same as the logged in user then it //////will be on right side
               }`}
               key={index}
