@@ -5,6 +5,8 @@ import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import AttachFileOutlinedIcon from "@material-ui/icons/AttachFileOutlined";
 import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
+import DoneAllRoundedIcon from '@material-ui/icons/DoneAllRounded';
+import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import MicIcon from "@material-ui/icons/Mic";
 import { useParams } from "react-router-dom";
 import db from "../../Config/firebase";
@@ -41,9 +43,11 @@ const Chat = () => {
         });
     }
   }, [roomId]);
+  
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, [roomId]);
+
   const sendMessage = e => {
     e.preventDefault();
     if (input) {
@@ -76,6 +80,19 @@ const Chat = () => {
       ref.current.scrollTo(0, ref.current.scrollHeight + 100);
     }
   };
+
+  const getStatus = (status) => {
+    if (status === 'delivered'){
+      return <DoneAllRoundedIcon style={{color:'grey'}} />
+    }
+    else if (status === 'seen') {
+      return <DoneAllRoundedIcon style={{color:'blue'}} />
+    } 
+    else {
+      return <DoneRoundedIcon style={{color:'grey'}} />
+    }
+  }
+
   return (
     <div className="chat">
       <div className="chat__header">
@@ -119,6 +136,8 @@ const Chat = () => {
               <span className="chat__timestamp">
                 {new Date(message.timestamp?.toDate()).toUTCString()}
               </span>
+              &nbsp;&nbsp;
+              {getStatus(message.status)}
             </p>
           );
         })}
