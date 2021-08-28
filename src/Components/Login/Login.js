@@ -4,6 +4,8 @@ import { Button } from "@material-ui/core";
 import { auth, provider, onlineUsers } from "../../Config/firebase";
 import { useStateValue } from "../../Datalayer/StateProvider";
 import { actionType } from "../../Datalayer/reducer";
+import AndroidRoundedIcon from '@material-ui/icons/AndroidRounded';
+import { IconButton } from "@material-ui/core";
 const Login = () => {
   const [{}, dispatch] = useStateValue();
   const signIn = e => {
@@ -36,6 +38,7 @@ const Login = () => {
           <h1>Sign in to WhatsApp</h1>
         </div>
         <Button type="submit" onClick={signIn}>
+          <AndroidRoundedIcon /> &nbsp;&nbsp;
           Sign in With Google
         </Button>
       </div>

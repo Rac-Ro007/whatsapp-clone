@@ -83,7 +83,7 @@ const Sidebar = () => {
           </IconButton>
         </div>
       </div>
-      <div className="sidebar__callToAction">
+      {/* <div className="sidebar__callToAction">
         <div className="sidebar__callToActionLeft">
           <p>{`${checked ? "Disable" : "Enable"} Dark Mode`}</p>
           <Switch
@@ -93,8 +93,8 @@ const Sidebar = () => {
             inputProps={{ "aria-label": "secondary checkbox" }}
           />
         </div>
-        <Button onClick={logout}>Logout</Button>
-      </div>
+        
+      </div> */}
 
       <div className="sidebar_search">
         <div className="sidebar__searchContainer">
@@ -116,10 +116,17 @@ const Sidebar = () => {
         })}
       </div>
       <div className="sidebar_search">
-        <AccountCircleRoundedIcon style={{color:'green'}} />
-        
+        <IconButton>
+          <AccountCircleRoundedIcon style={{color:'green'}} />
+        </IconButton>
+          
         <label style={{color:'green'}}>{activecount} member online</label>
-        <CachedRoundedIcon style={{color:'green', float:'right'}} onClick={currentUsers}/>
+
+        <IconButton>
+          <CachedRoundedIcon style={{color:'green', float:'right'}} onClick={currentUsers}/>
+        </IconButton>
+
+        <Button onClick={logout} style={{backgroundColor:'#242526', color:'white', borderRadius:'5px'}}>Logout</Button>
       </div>
     </div>
   );

@@ -53,7 +53,7 @@ const SidebarChat = ({ addNewChat, id, name }) => {
   return !addNewChat ? (
     <Link to={`/rooms/${id}`}>
       <div className="sidebarChat">
-        <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+        <Avatar />
         <div className="sidebarChat__info">
           <h2>{name}</h2>
           <p>{messages[0]?.message}</p>
@@ -70,18 +70,19 @@ const SidebarChat = ({ addNewChat, id, name }) => {
         className="sidebarChat__modal"
       >
         <div className="sidebarChat__modalContainer">
-          <h1>Add a New Chat</h1>
+          <h3 style={{color:'#0a8d48'}}>Add a New Chat</h3>
+          <hr/>
           <TextField
-            variant="outlined"
+            // variant=
             placeholder="Enter room name"
             value={input}
             onChange={e => setInput(e.target.value)}
           />
-          <Button onClick={createChat}>Create</Button>
+          <Button style={{backgroundColor:'#0a8d48', color:'white'}} onClick={createChat}>Create</Button>
         </div>
       </Modal>
-      <div className="sidebarChat" onClick={handleOpen}>
-        <h2>Add New Chat</h2>
+      <div className="sidebarChat" style={{alignItems:'center'}} onClick={handleOpen}>
+        <h3 style={{color:'green', borderRadius:'10px'}}>Add New Chat</h3>
       </div>
     </>
   );
