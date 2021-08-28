@@ -1,0 +1,58 @@
+.sidebarChat {
+  display: flex;
+  padding: 15px;
+  cursor: pointer;
+  border: 1px solid #f6f6ff;
+  transition: all 0.1s ease;
+  word-break: break-all;
+}
+.sidebarChat:hover {
+  background-color: #ebebeb;
+}
+.sidebarChat__info > h2 {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.sidebarChat__info {
+  margin-left: 15px;
+}
+
+a {
+  text-decoration: none !important;
+  color: black;
+}
+.sidebarChat__modal {
+  max-width: 600px;
+  width: 100%;
+  background-color: white;
+  height: 200px;
+  margin: 20% auto;
+}
+.sidebarChat__modalContainer {
+  max-width: 600px;
+  width: 100%;
+  background-color: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.sidebarChat__modalContainer button {
+  background-color: gray;
+  margin-top: 20px;
+}
+.sidebarChat__modalContainer button:hover {
+  background-color: gray;
+}
+/* dark theme style */
+.night .sidebarChat {
+  background-color: black;
+  color: white;
+  border: 1px solid transparent;
+}
+
+.night .sidebarChat:hover {
+  background-color: rgb(100, 97, 97);
+}
