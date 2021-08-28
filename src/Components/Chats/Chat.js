@@ -47,34 +47,38 @@ const Chat = () => {
         .orderBy("timestamp", "asc")
         .onSnapshot(snapshot => {
           setMessages(snapshot.docs.map(doc => doc.data()));
-        });
-      
-      updateRecieveMessages()
+        });      
     }
   }, [roomId]);
 
   const updateRecieveMessages = () => {
-      // db.collection("rooms")
-      //   .doc(roomId)
-      //   .collection("messages").where('name', '!=', onlineUsers.myName)
-      //   .update({
-      //     status: 'seen'
-      //   });
-      var unReadMessages = db.collection("rooms").doc(roomId).collection("messages")
-
-      unReadMessages.where('name', '!=', onlineUsers.myName)
-        .get()
-        .then(snapshots => {
+      // Update all received messages
+      db.collection("rooms").doc(roomId).collection("messages").where('name', '!=', onlineUsers.myName)
+        .onSnapshot(snapshots => {
           if (snapshots.size > 0) {
             snapshots.forEach(msg => {
-              unReadMessages.doc(msg.id).update({ status: 'seen' })
+              db.collection("rooms").doc(roomId).collection("messages").doc(msg.id).update({ status: 'seen' })
             })
           }
         })
+      // var unReadMessages = db.collection("rooms").doc(roomId).collection("messages")
+
+      // unReadMessages.where('name', '!=', onlineUsers.myName)
+      //   .get()
+      //   .then(snapshots => {
+      //     if (snapshots.size > 0) {
+      //       snapshots.forEach(msg => {
+      //         unReadMessages.doc(msg.id).update({ status: 'seen' })
+      //       })
+      //     }
+      //   })
   }
   
   useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
+    if (roomId) {
+      updateRecieveMessages()
+    }
   }, [roomId]);
 
   const sendMessage = e => {
