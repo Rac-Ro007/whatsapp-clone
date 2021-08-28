@@ -1,15 +1,4 @@
-This is a Whatsapp clone build using React and firebase
+### Building Whatapp Clone using React and Firebase (1-1 chat app)
 
-It uses auth protocol google sign up method
-
-the data layer used is React context API for data populating
-
-We can add chats in this whatsapp or search for the chats
-
-we can also chat with the other users
-
-user can also login and logout from this app
-
-it also shows the last seen of the particular chats based on the last chat sent in that chat room
-
-It can change the theme from dark theme to light theme and vice-versa
+~ Key notes to remember 
+1. Both the users need to signin at the time of new chat creation

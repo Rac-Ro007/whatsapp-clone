@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Avatar, TextField, Button } from "@material-ui/core";
 import "./SidebarChat.css";
-import db from "../../Config/firebase";
+import db, {onlineUsers} from "../../Config/firebase";
 import { Link } from "react-router-dom";
 import Modal from "@material-ui/core/Modal";
 const SidebarChat = ({ addNewChat, id, name }) => {
@@ -33,10 +33,18 @@ const SidebarChat = ({ addNewChat, id, name }) => {
   };
   const createChat = e => {
     e.preventDefault();
+    var participants = []
+
+    onlineUsers.onUpdated(function(count, users) {
+      participants = users
+      console.log(participants)
+    });
+
     if (input) {
       //do some stuffs in db
       db.collection("rooms").add({
-        name: input
+        name: input,
+        participants: participants
       });
       setInput("");
       handleClose();

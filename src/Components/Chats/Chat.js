@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
 import db from "../../Config/firebase";
 import { useStateValue } from "../../Datalayer/StateProvider";
 import firebase from "firebase";
-import onlineUsers from "../../Config/firebase";
+import {onlineUsers} from "../../Config/firebase";
 
 const Chat = () => {
   const [{ user }, dispatch] = useStateValue();
@@ -24,6 +24,8 @@ const Chat = () => {
 
   const [roomName, setRoomName] = useState("");
 
+  const [roomMembers, setRoomMembers] = useState([]);
+
   const [messages, setMessages] = useState([]); //for storing a messages or chats
 
   // const [receipentStatus, setReceipentStatus] = useState("");// for receipient status
@@ -33,6 +35,10 @@ const Chat = () => {
       db.collection("rooms")
         .doc(roomId)
         .onSnapshot(snapshot => setRoomName(snapshot.data().name));
+
+      db.collection("rooms")
+        .doc(roomId)
+        .onSnapshot(snapshot => setRoomMembers(snapshot.data().participants));
 
       db.collection("rooms")
         .doc(roomId)
@@ -48,16 +54,26 @@ const Chat = () => {
     setSeed(Math.floor(Math.random() * 5000));
   }, [roomId]);
 
+  const getSentStatus = () => {
+
+  }
+
   const sendMessage = e => {
     e.preventDefault();
     if (input) {
       // fetching status of user
-      var receipentStatus = ''
+      var receipentStatus = '';
+      // console.log(onlineUsers)
       onlineUsers.onUpdated(function(count, users) {
         for(var i in users) {
-            if ({roomName} === users[i]) {
-              receipentStatus = 'delivered'
-              break
+            console.log({roomMembers})
+            console.log(users[i])
+            for (var j in roomMembers) {
+              if (roomMembers[j] === users[i] && users[i] !== onlineUsers.myName) {
+                console.log(roomMembers[j] === users[i])
+                receipentStatus = 'delivered'
+                break
+              }
             }
         }
         if (receipentStatus === '') {
