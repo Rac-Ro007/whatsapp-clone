@@ -7,6 +7,7 @@ import MoreVertOutlinedIcon from "@material-ui/icons/MoreVertOutlined";
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon";
 import DoneAllRoundedIcon from '@material-ui/icons/DoneAllRounded';
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
+import CachedRoundedIcon from '@material-ui/icons/CachedRounded';
 import MicIcon from "@material-ui/icons/Mic";
 import { useParams } from "react-router-dom";
 import db from "../../Config/firebase";
@@ -146,6 +147,9 @@ const Chat = () => {
           </p>
         </div>
         <div className="chat__headerRight">
+          <IconButton>
+            <CachedRoundedIcon style={{color:'green', float:'right'}} onClick={updateRecieveMessages}/>
+          </IconButton>
           <IconButton>
             <SearchOutlinedIcon />
           </IconButton>
