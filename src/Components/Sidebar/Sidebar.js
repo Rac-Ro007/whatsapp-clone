@@ -24,6 +24,7 @@ const Sidebar = () => {
   const history = useHistory();
   const [activecount, setActiveCount] = useState(0);
   useEffect(() => {
+    currentUsers()
     const unsubscribe = db.collection("rooms").onSnapshot(snapshot => {
       setRooms(
         snapshot.docs.map(doc => {
@@ -115,10 +116,10 @@ const Sidebar = () => {
         })}
       </div>
       <div className="sidebar_search">
-        <AccountCircleRoundedIcon />
+        <AccountCircleRoundedIcon style={{color:'green'}} />
         
         <label style={{color:'green'}}>{activecount} member online</label>
-        <CachedRoundedIcon onClick={currentUsers}/>
+        <CachedRoundedIcon style={{color:'green', float:'right'}} onClick={currentUsers}/>
       </div>
     </div>
   );

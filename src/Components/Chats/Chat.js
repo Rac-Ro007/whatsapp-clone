@@ -10,6 +10,8 @@ import { useParams } from "react-router-dom";
 import db from "../../Config/firebase";
 import { useStateValue } from "../../Datalayer/StateProvider";
 import firebase from "firebase";
+import onlineUsers from "../../Config/firebase";
+
 const Chat = () => {
   const [{ user }, dispatch] = useStateValue();
   const [seed, setSeed] = useState("");
@@ -21,6 +23,8 @@ const Chat = () => {
   const [roomName, setRoomName] = useState("");
 
   const [messages, setMessages] = useState([]); //for storing a messages or chats
+
+  // const [receipentStatus, setReceipentStatus] = useState("");// for receipient status
   useEffect(() => {
     //   to render the chat based on the roomid provided as a url params and run for each roomId changes
     if (roomId) {
@@ -43,14 +47,30 @@ const Chat = () => {
   const sendMessage = e => {
     e.preventDefault();
     if (input) {
+      // fetching status of user
+      var receipentStatus = ''
+      onlineUsers.onUpdated(function(count, users) {
+        for(var i in users) {
+            if ({roomName} === users[i]) {
+              receipentStatus = 'delivered'
+              break
+            }
+        }
+        if (receipentStatus === '') {
+          receipentStatus = 'sent'
+        }
+      });
+
       db.collection("rooms")
         .doc(roomId)
         .collection("messages")
         .add({
           message: input,
           name: user.displayName,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
           // to add the timestamp of the server time
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          // status of message
+          status: receipentStatus
         });
       setInput("");
       ref.current.scrollTo(0, ref.current.scrollHeight + 100);
