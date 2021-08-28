@@ -6,6 +6,7 @@ import ChatIcon from "@material-ui/icons/Chat";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import SearchOutlinedIcon from "@material-ui/icons/SearchOutlined";
 import AccountCircleRoundedIcon from '@material-ui/icons/AccountCircleRounded';
+import CachedRoundedIcon from '@material-ui/icons/CachedRounded';
 import SidebarChat from "../SidebarChat/SidebarChat";
 import db from "../../Config/firebase";
 import { useStateValue } from "../../Datalayer/StateProvider";
@@ -21,6 +22,7 @@ const Sidebar = () => {
   const [search, setSearch] = useState("");
   const [checked, setChecked] = useState(false);
   const history = useHistory();
+  const [activecount, setActiveCount] = useState(0);
   useEffect(() => {
     const unsubscribe = db.collection("rooms").onSnapshot(snapshot => {
       setRooms(
@@ -47,6 +49,7 @@ const Sidebar = () => {
       mode: checked
     });
   };
+
   const logout = () => {
     dispatch({
       type: actionType.SET_USER,
@@ -58,11 +61,9 @@ const Sidebar = () => {
   };
 
   const currentUsers = () => {
-    var active = ''
     onlineUsers.onUpdated(function(count, users) {
-      active = count
+      setActiveCount(count)
   });
-  return active
 }
 
   return (
@@ -116,7 +117,8 @@ const Sidebar = () => {
       <div className="sidebar_search">
         <AccountCircleRoundedIcon />
         
-        <label style={{color:'green'}}>{currentUsers()} member online</label> 
+        <label style={{color:'green'}}>{activecount} member online</label>
+        <CachedRoundedIcon onClick={currentUsers}/>
       </div>
     </div>
   );
