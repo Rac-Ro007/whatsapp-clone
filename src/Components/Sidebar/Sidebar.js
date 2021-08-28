@@ -60,11 +60,7 @@ const Sidebar = () => {
   const currentUsers = () => {
     var active = ''
     onlineUsers.onUpdated(function(count, users) {
-    console.log('We have '+ count +' members online right now.');
-    // for(var i in users) {
-    //     console.log(users[i] + '(id: '+ i + ')');
-    // }
-    active = count
+      active = count
   });
   return active
 }
@@ -120,7 +116,7 @@ const Sidebar = () => {
       <div className="sidebar_search">
         <AccountCircleRoundedIcon />
         
-        <label>{currentUsers()}</label> 
+        <label style={{color:'green'}}>{currentUsers()} member online</label> 
       </div>
     </div>
   );
