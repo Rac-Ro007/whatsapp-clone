@@ -17,4 +17,6 @@ React and Firebase
 
 ## App deployed on Web @ https://whatsapp-clone-ebdd6.web.app/
 
+## Demo Video Link - https://www.loom.com/share/c9624fb068004fbab75c25f4bc9b9387?sid=d1cb0699-48f9-4cfd-8df5-cbf72ea357cc
+
 P.S. Not Responsive
